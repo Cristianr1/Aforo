@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Aforo</string>
+    <string name="logo">Logo accesspark</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="settings">Ajustes</string>
+    <string name="document">Documento</string>
+    <string name="input">Entrada</string>
+    <string name="output">Salida</string>
+    <string name="settings_icon">Settings icon</string>
+    <string name="output_icon">Output icon</string>
+    <string name="input_icon">Input icon</string>
+    <string name="id_card">Cédula</string>
+    <string name="get_out">Salir</string>
+    <string name="home_icon">Home icon</string>
+    <string name="server_ip">IP del Servidor</string>
+    <string name="get_back">Volver</string>
+    <string name="logout">Cerrar sesión</string>
+</resources>
