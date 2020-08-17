@@ -265,10 +265,10 @@
                         android:layout_gravity="end"
                         android:ems="10"
                         android:hint="Niños a Cargo"
-                        android:text="0"
                         android:importantForAutofill="no"
                         android:inputType="number"
                         android:maxLength="2"
+                        android:text="0"
                         android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -282,7 +282,7 @@
             android:id="@+id/editTextContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
 
         <!--/////////////////////////////////////////////////////////////-->
 
@@ -311,20 +311,20 @@
                 android:text="Ingresar"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
-                card_view:layout_constraintEnd_toStartOf="@+id/btnSettingsInput"
+                card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.5"
                 card_view:layout_constraintStart_toEndOf="@+id/home"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/btnSettingsInput"
-                android:layout_width="67dp"
-                android:layout_height="49dp"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.5"
-                card_view:layout_constraintStart_toEndOf="@+id/getIn"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:srcCompat="@drawable/ic_baseline_settings" />
+            <!--            <ImageView-->
+            <!--                android:id="@+id/btnSettingsInput"-->
+            <!--                android:layout_width="67dp"-->
+            <!--                android:layout_height="49dp"-->
+            <!--                card_view:layout_constraintEnd_toEndOf="parent"-->
+            <!--                card_view:layout_constraintHorizontal_bias="0.5"-->
+            <!--                card_view:layout_constraintStart_toEndOf="@+id/getIn"-->
+            <!--                card_view:layout_constraintTop_toTopOf="parent"-->
+            <!--                card_view:srcCompat="@drawable/ic_baseline_settings" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -344,36 +344,24 @@
                     android:layout_marginTop="4dp"
                     card_view:hintTextAppearance="@style/Hint">
 
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        android:id="@+id/available"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="start"-->
-<!--                        android:ems="10"-->
-<!--                        android:hint="Cupo Disponible"-->
-<!--                        android:importantForAutofill="no"-->
-<!--                        android:inputType="number"-->
-<!--                        android:maxLength="20"-->
-<!--                        android:textSize="12sp" />-->
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="20sp"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/space"
                         android:textColor="#1774BD"
-                        android:text="Cupo Disponible" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/available"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="25sp"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/no_data"
                         android:textColor="#1774BD"
-                        android:text="Sin dato" />
+                        android:textSize="25sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -384,43 +372,30 @@
                     android:layout_marginTop="4dp"
                     card_view:hintTextAppearance="@style/Hint">
 
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        android:id="@+id/occupation"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="end"-->
-<!--                        android:ems="10"-->
-<!--                        android:hint="Ocupación"-->
-<!--                        android:importantForAutofill="no"-->
-<!--                        android:inputType="phone"-->
-<!--                        android:maxLength="20"-->
-<!--                        android:textSize="12sp" />-->
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="20sp"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/occupation"
                         android:textColor="#cc0000"
-                        android:text="Ocupación" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/occupation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="25sp"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/no_data"
                         android:textColor="#cc0000"
-                        android:text="Sin dato" />
+                        android:textSize="25sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
             </TableRow>
         </TableLayout>
 
-
-
     </LinearLayout>
+
 </ScrollView>

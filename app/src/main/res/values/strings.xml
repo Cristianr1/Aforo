@@ -17,4 +17,7 @@
     <string name="server_ip">IP del Servidor</string>
     <string name="get_back">Volver</string>
     <string name="logout">Cerrar sesión</string>
+    <string name="space">Cupo Disponible</string>
+    <string name="occupation">Ocupación</string>
+    <string name="no_data">Sin dato</string>
 </resources>

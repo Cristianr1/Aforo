@@ -79,6 +79,8 @@ public class Available implements Runnable {
                         public void onErrorResponse(VolleyError error) {
                             // TODO: Handle error
                             Log.d("Response: ", error.toString());
+                            textAvailable.setText("Sin dato");
+                            textOccupation.setText("Sin dato");
                             if (error.networkResponse != null)
                                 try {
                                     String responseBody = new String(error.networkResponse.data, "utf-8");

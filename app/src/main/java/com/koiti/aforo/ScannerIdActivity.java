@@ -144,17 +144,28 @@ public class ScannerIdActivity extends AppCompatActivity {
                                 if (match.find()) {
                                     lastCapitalIndex = match.start();
                                 }
+                                int auxIndex; // auxiliary index that helps read the second name
 
                                 idNumber = splitStr[3 + corrimiento].substring(lastCapitalIndex - 10, lastCapitalIndex);
                                 surname = splitStr[3 + corrimiento].substring(lastCapitalIndex);
                                 secondSurname = splitStr[4 + corrimiento];
                                 firstName = splitStr[5 + corrimiento];
                                 secondName = splitStr[6 + corrimiento];
-                                gender = splitStr[7 + corrimiento].contains("M") ? "M" : "F";
-                                birthDate = splitStr[7 + corrimiento].substring(8, 10) + "/"
-                                        + splitStr[7 + corrimiento].substring(6, 8) + "/"
-                                        + splitStr[7 + corrimiento].substring(2, 6);
-                                rh = splitStr[7 + corrimiento].substring(splitStr[7 + corrimiento].length() - 2);
+
+                                // conditional that checks if a user has only one or more names
+                                if (secondName.contains("0")) {
+                                    secondName = "";
+                                    auxIndex = 6; //only one name
+                                } else if (!splitStr[7 + corrimiento].contains("0")) {
+                                    auxIndex = 8; //three names
+                                } else
+                                    auxIndex = 7; //two names
+
+                                gender = splitStr[auxIndex + corrimiento].contains("M") ? "M" : "F";
+                                birthDate = splitStr[auxIndex + corrimiento].substring(8, 10) + "/"
+                                        + splitStr[auxIndex + corrimiento].substring(6, 8) + "/"
+                                        + splitStr[auxIndex + corrimiento].substring(2, 6);
+                                rh = splitStr[auxIndex + corrimiento].substring(splitStr[auxIndex + corrimiento].length() - 2);
 
                                 idData.add(idNumber);
                                 idData.add(surname);
@@ -201,4 +212,10 @@ public class ScannerIdActivity extends AppCompatActivity {
         initialiseDetectorsAndSources();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

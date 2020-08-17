@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,7 +47,7 @@ public class UploadInput implements Runnable {
 
     @Override
     public void run() {
-        SPData spData = new SPData();
+        final SPData spData = new SPData();
         String ip = spData.getValueString("serverIp", context);
         String parkingLot = "";
         int userId = spData.getValueInt("userId", context);
@@ -92,12 +94,10 @@ public class UploadInput implements Runnable {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         Log.d("Response is: ", response);
-//                        Toasty.success(context, response, Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(context, ScannerIdActivity.class);
-                        context.startActivity(intent);
-                        activity.finish();
-                        available.stop();
+                        InputAlert inputAlert = new InputAlert(context, available, activity);
+                        AlertDialog successAlert = inputAlert.createSuccessAlert();
+                        successAlert.show();
+                        successAlert.setCanceledOnTouchOutside(false);
                     }
                 }, new Response.ErrorListener() {
             @Override

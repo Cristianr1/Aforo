@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -24,7 +25,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.koiti.aforo.Available;
 import com.koiti.aforo.MainActivity;
 import com.koiti.aforo.R;
-import com.koiti.aforo.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +44,7 @@ public class InputActivity extends AppCompatActivity {
     private Available available;
     private LinearLayout linearLayout;
     private TextView textOccupation, textAvailable;
+    private Button getIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +74,8 @@ public class InputActivity extends AppCompatActivity {
         ImageView home = findViewById(R.id.home);
         home.setOnClickListener(listener);
 
-        Button getIn = findViewById(R.id.getIn);
+        getIn = findViewById(R.id.getIn);
         getIn.setOnClickListener(listener);
-
-        ImageView settings = findViewById(R.id.btnSettingsInput);
-        settings.setOnClickListener(listener);
 
         textNumChildren.addTextChangedListener(textWatcher);
 
@@ -93,6 +91,7 @@ public class InputActivity extends AppCompatActivity {
             Intent intentNav;
             switch (v.getId()) {
                 case R.id.getIn:
+                    Log.d("get in", "button pressed");
                     phone = String.valueOf(textPhone.getText());
                     temperature = String.valueOf(textTemperature.getText());
                     address = String.valueOf(textAddress.getText());
@@ -118,6 +117,7 @@ public class InputActivity extends AppCompatActivity {
                             idData.add(numChildren);
                         }
 
+                        getIn.setEnabled(false);
                         UploadInput uploadInput = new UploadInput(context, idData, editTextsDynamically, InputActivity.this, available);
                         new Thread(uploadInput).start();
                     } else {
@@ -128,11 +128,6 @@ public class InputActivity extends AppCompatActivity {
                     intentNav = new Intent(context, MainActivity.class);
                     startActivity(intentNav);
                     finish();
-                    available.stop();
-                    break;
-                case R.id.btnSettingsInput:
-                    intentNav = new Intent(context, SettingsActivity.class);
-                    startActivity(intentNav);
                     available.stop();
                     break;
             }
@@ -211,5 +206,13 @@ public class InputActivity extends AppCompatActivity {
         available = new Available(context, textAvailable, textOccupation);
         Thread threadAvailable = new Thread(available);
         threadAvailable.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
+        finish();
+        available.stop();
     }
 }
