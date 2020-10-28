@@ -1,0 +1,47 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="sync_icon"
+            android:width="48dp"
+            android:height="48dp"
+            android:viewportHeight="24"
+            android:viewportWidth="24">
+            <group android:name="animate_vector">
+                <path
+                    android:name="gear"
+                    android:fillColor="#233f6c"
+                    android:pathData="M12,4L12,1L8,5l4,4L12,6c3.31,0 6,2.69 6,6 0,1.01 -0.25,1.97 -0.7,2.8l1.46,1.46C19.54,15.03 20,13.57 20,12c0,-4.42 -3.58,-8 -8,-8zM12,18c-3.31,0 -6,-2.69 -6,-6 0,-1.01 0.25,-1.97 0.7,-2.8L5.24,7.74C4.46,8.97 4,10.43 4,12c0,4.42 3.58,8 8,8v3l4,-4 -4,-4v3z" />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="animate_vector">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="800"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+                    android:propertyName="rotation"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:valueFrom="360"
+                    android:valueTo="0"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:duration="800"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="pivotX"
+                    android:valueFrom="12"
+                    android:valueTo="12"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:duration="800"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="pivotY"
+                    android:valueFrom="12"
+                    android:valueTo="12"
+                    android:valueType="floatType" />
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

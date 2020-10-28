@@ -24,13 +24,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Context context;
     private SPData spData = new SPData();
-    private TextInputEditText textServerIp;
     private ArrayList<String> arrayListSpinner = new ArrayList<>();
-
+    private TextInputEditText textServerIp;
+    private TextInputEditText textServerSocketIp;
+    private TextInputEditText textServerSocketPort;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -52,10 +54,18 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         else
             logout.setVisibility(View.VISIBLE);
 
-
         textServerIp = findViewById(R.id.serverIp);
         textServerIp.addTextChangedListener(textWatcher);
         textServerIp.setText(spData.getValueString("serverIp", context));
+
+        textServerSocketIp = findViewById(R.id.serverSocketIp);
+        textServerSocketIp.addTextChangedListener(textWatcher);
+        textServerSocketIp.setText(spData.getValueString("socketIp", context));
+
+        textServerSocketPort = findViewById(R.id.serverSocketPort);
+        textServerSocketPort.addTextChangedListener(textWatcher);
+        String port = String.valueOf(spData.getValueInt("socketPort", context));
+        textServerSocketPort.setText(port);
 
         Spinner spinnerParkingLot = findViewById(R.id.spinnerParkingLot);
         spinnerParkingLot.setOnItemSelectedListener(this);
@@ -117,8 +127,17 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         @Override
         public void afterTextChanged(Editable s) {
             String text = s.toString();
-//            if (Objects.requireNonNull(textServerIp.getText()).hashCode() == s.hashCode())
-            spData.save(text, "serverIp", context);
+            if (Objects.requireNonNull(textServerIp.getText()).hashCode() == s.hashCode())
+                spData.save(text, "serverIp", context);
+            else if (Objects.requireNonNull(textServerSocketIp.getText()).hashCode() == s.hashCode())
+                spData.save(text, "socketIp", context);
+            else {
+                int value = 0;
+                if (!text.equals("")) {
+                    value = Integer.parseInt(text);
+                }
+                spData.save(value, "socketPort", context);
+            }
         }
     };
 

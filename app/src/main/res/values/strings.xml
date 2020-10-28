@@ -20,4 +20,6 @@
     <string name="space">Cupo Disponible</string>
     <string name="occupation">Ocupación</string>
     <string name="no_data">Sin dato</string>
+    <string name="server_socket_ip">IP del servidor socket</string>
+    <string name="server_socket_port">Puerto del servidor socket</string>
 </resources>

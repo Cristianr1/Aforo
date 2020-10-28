@@ -5,7 +5,9 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private SPData spData = new SPData();
     private Available available;
-    private TextView textOccupation, textAvailable, textParkingName;
+    private TextView textOccupation, textAvailable, textParkingName, textConnected;
     private String parkingLot;
 
     @Override
@@ -32,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
         CardView btnInput = findViewById(R.id.btnInput);
         CardView btnOutput = findViewById(R.id.btnOutput);
         ImageView btnSettings = findViewById(R.id.btnSettingsMain);
+        ImageView btnSync = findViewById(R.id.btnSync);
 
         btnInput.setOnClickListener(listener);
         btnOutput.setOnClickListener(listener);
         btnSettings.setOnClickListener(listener);
+        btnSync.setOnClickListener(listener);
 
         textParkingName = findViewById(R.id.parkingName);
         parkingLot = spData.getValueString("parkingLot", context);
@@ -44,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
         textOccupation = findViewById(R.id.occupation);
         textAvailable = findViewById(R.id.available);
+        textConnected = findViewById(R.id.connected);
+
+        String connected = spData.getValueString("connected", context);
+        if (!connected.equals(""))
+            textConnected.setText(connected);
+
 
         available = new Available(context, textAvailable, textOccupation);
         Thread threadAvailable = new Thread(available);
@@ -59,26 +69,40 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             // do something when the button is clicked
-            Intent intentNav = null;
             switch (v.getId()) {
                 case R.id.btnInput:
-                    intentNav = new Intent(context, ScannerIdActivity.class);
+                    startActivity(new Intent(context, ScannerIdActivity.class));
                     spData.save(true, "input", context);
                     finish();
                     available.stop();
                     break;
                 case R.id.btnOutput:
-                    intentNav = new Intent(context, ScannerIdActivity.class);
+                    startActivity(new Intent(context, ScannerIdActivity.class));
                     spData.save(false, "input", context);
                     finish();
                     available.stop();
                     break;
                 case R.id.btnSettingsMain:
-                    intentNav = new Intent(context, SettingsActivity.class);
+                    startActivity(new Intent(context, SettingsActivity.class));
                     available.stop();
                     break;
+                case R.id.btnSync:
+                    final Animatable animatable = (Animatable) ((ImageView) v).getDrawable();
+                    animatable.start();
+                    final Client client = new Client(context);
+                    Thread threadClient = new Thread(client);
+                    threadClient.start();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            animatable.stop();
+                            String status = client.getConnected() ? "Conectado" : "No conectado";
+                            textConnected.setText(status);
+                        }
+                    }, 800);
+                    break;
             }
-            startActivity(intentNav);
         }
     };
 

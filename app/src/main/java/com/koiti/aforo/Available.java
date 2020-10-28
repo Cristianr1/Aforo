@@ -32,16 +32,23 @@ public class Available implements Runnable {
     private Context context;
     private TextView textAvailable, textOccupation;
     private volatile boolean query = true;
+    private boolean isInput;
 
     public Available(Context context, TextView textAvailable, TextView textOccupation) {
         this.context = context;
         this.textAvailable = textAvailable.findViewById(R.id.available);
         this.textOccupation = textOccupation.findViewById(R.id.occupation);
+        isInput = true;
+    }
+
+    public Available(Context context) {
+        this.context = context;
+        isInput = false;
     }
 
     @Override
     public void run() {
-        SPData spData = new SPData();
+        final SPData spData = new SPData();
         String ip = spData.getValueString("serverIp", context);
         String parkingLot = "";
 
@@ -68,8 +75,11 @@ public class Available implements Runnable {
                                 int numAvailableSpace = (int) ((double) occupationMap.get("disponible"));
                                 String availableSpace = Integer.toString(numAvailableSpace);
                                 String occupation = Integer.toString(numOccupation);
-                                textAvailable.setText(availableSpace);
-                                textOccupation.setText(occupation);
+                                spData.save(availableSpace, "available", context);
+                                if (isInput) {
+                                    textAvailable.setText(availableSpace);
+                                    textOccupation.setText(occupation);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -79,8 +89,10 @@ public class Available implements Runnable {
                         public void onErrorResponse(VolleyError error) {
                             // TODO: Handle error
                             Log.d("Response: ", error.toString());
-                            textAvailable.setText("Sin dato");
-                            textOccupation.setText("Sin dato");
+                            if (isInput) {
+                                textAvailable.setText("Sin dato");
+                                textOccupation.setText("Sin dato");
+                            }
                             if (error.networkResponse != null)
                                 try {
                                     String responseBody = new String(error.networkResponse.data, "utf-8");

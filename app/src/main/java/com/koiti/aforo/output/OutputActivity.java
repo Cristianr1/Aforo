@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.koiti.aforo.Available;
 import com.koiti.aforo.MainActivity;
 import com.koiti.aforo.R;
 
@@ -17,9 +18,8 @@ import java.util.ArrayList;
 
 public class OutputActivity extends AppCompatActivity {
     private Context context;
-    private TextView tvDocument;
-    private ArrayList<String> idData;
     private String document;
+    private Available available;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class OutputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_output);
         context = this;
 
-        tvDocument = findViewById(R.id.documentOutput);
+        TextView tvDocument = findViewById(R.id.documentOutput);
 
         ImageView home = findViewById(R.id.homeOutput);
         home.setOnClickListener(listener);
@@ -35,12 +35,16 @@ public class OutputActivity extends AppCompatActivity {
         Button getOut = findViewById(R.id.btnGetOut);
         getOut.setOnClickListener(listener);
 
-        idData = getIntent().getStringArrayListExtra("Identification_data");
+        ArrayList<String> idData = getIntent().getStringArrayListExtra("Identification_data");
 
         if (idData != null) {
             tvDocument.setText(idData.get(0));
             document = idData.get(0);
         }
+
+        available = new Available(context);
+        Thread threadAvailable = new Thread(available);
+        threadAvailable.start();
     }
 
     private View.OnClickListener listener = new View.OnClickListener() {
@@ -55,15 +59,25 @@ public class OutputActivity extends AppCompatActivity {
                     intentNav = new Intent(context, MainActivity.class);
                     startActivity(intentNav);
                     finish();
+                    available.stop();
                     break;
             }
         }
     };
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        available = new Available(context);
+        Thread threadAvailable = new Thread(available);
+        threadAvailable.start();
+    }
+
+    @Override
     public void onBackPressed() {
         Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);
         finish();
+        available.stop();
     }
 }
